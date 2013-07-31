@@ -114,8 +114,21 @@ public:
      * get the local time at which the next write to the audio driver will be
      * presented
      */
+#ifndef ICS_AUDIO_BLOB
     virtual status_t    getNextWriteTimestamp(int64_t *timestamp);
-
+#endif
+#ifdef QCOM_HARDWARE
+    virtual status_t    start() {return INVALID_OPERATION;}
+    virtual status_t    pause()  {return INVALID_OPERATION;}
+    virtual status_t    flush()  {return INVALID_OPERATION;}
+    virtual status_t    stop()  {return INVALID_OPERATION;}
+    virtual int         setObserver(void *observer)  {return INVALID_OPERATION;}
+    virtual status_t    getBufferInfo(buf_info **buf) {return INVALID_OPERATION;}
+    virtual status_t    isBufferAvailable(int *isAvail) {
+        *isAvail = true;
+        return NO_ERROR;
+    }
+#endif
 };
 
 /**
@@ -208,6 +221,11 @@ public:
 
     /** set the audio volume of a voice call. Range is between 0.0 and 1.0 */
     virtual status_t    setVoiceVolume(float volume) = 0;
+
+#ifdef QCOM_FM_ENABLED
+    /** set the fm volume. Range is between 0.0 and 1.0 */
+    virtual status_t    setFmVolume(float volume) { return 0; }
+#endif
 
     /**
      * set the audio volume for all audio activities other than voice call.
