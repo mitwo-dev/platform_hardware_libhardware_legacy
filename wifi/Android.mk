@@ -1,4 +1,6 @@
 # Copyright 2006 The Android Open Source Project
+$(shell mkdir -p $(OUT)/obj/SHARED_LIBRARIES/libqminvapi_intermediates)
+$(shell touch $(OUT)/obj/SHARED_LIBRARIES/libqminvapi_intermediates/export_includes)
 
 LOCAL_CFLAGS += -DCONFIG_CTRL_IFACE_CLIENT_DIR=\"/data/misc/wifi/sockets\"
 LOCAL_CFLAGS += -DCONFIG_CTRL_IFACE_CLIENT_PREFIX=\"wpa_ctrl_\"
@@ -30,4 +32,4 @@ endif
 
 LOCAL_SRC_FILES += wifi/wifi.c
 
-LOCAL_SHARED_LIBRARIES += libnetutils
+LOCAL_SHARED_LIBRARIES += libnetutils libqminvapi
