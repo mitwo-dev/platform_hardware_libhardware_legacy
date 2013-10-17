@@ -62,7 +62,7 @@ enum audio_source {
     AUDIO_SOURCE_VOICE_RECOGNITION = 6,
     AUDIO_SOURCE_VOICE_COMMUNICATION = 7,
     AUDIO_SOURCE_REMOTE_SUBMIX = 8,
-#if defined(QCOM_FM_ENABLED) || defined(STE_FM)
+#ifdef QCOM_FM_ENABLED
     AUDIO_SOURCE_FM_RX = 9,
     AUDIO_SOURCE_FM_RX_A2DP = 10,
     AUDIO_SOURCE_MAX = AUDIO_SOURCE_FM_RX_A2DP,
@@ -262,7 +262,7 @@ public:
         DEVICE_OUT_USB_ACCESSORY = 0x2000,
         DEVICE_OUT_USB_DEVICE = 0x4000,
 #endif
-#if defined(QCOM_FM_ENABLED) || defined(STE_FM)
+#ifdef QCOM_FM_ENABLED
         DEVICE_OUT_FM = 0x8000,
         DEVICE_OUT_FM_TX = 0x10000,
 #endif
@@ -284,7 +284,7 @@ public:
                 DEVICE_OUT_ANC_HEADSET | DEVICE_OUT_ANC_HEADPHONE |
                 DEVICE_OUT_PROXY |
 #endif
-#if defined(QCOM_FM_ENABLED) || defined(STE_FM)
+#ifdef QCOM_FM_ENABLED
                 DEVICE_OUT_FM | DEVICE_OUT_FM_TX |
 #endif
                 DEVICE_OUT_DEFAULT),
@@ -322,10 +322,6 @@ public:
         DEVICE_IN_DEFAULT = 0x80000000,
 #endif
 
-#if defined (STE_FM)
-        DEVICE_IN_FM_RX = 0x1000000,
-#endif
-
         DEVICE_IN_ALL = (DEVICE_IN_COMMUNICATION | DEVICE_IN_AMBIENT | DEVICE_IN_BUILTIN_MIC |
                 DEVICE_IN_BLUETOOTH_SCO_HEADSET | DEVICE_IN_WIRED_HEADSET | DEVICE_IN_AUX_DIGITAL |
                 DEVICE_IN_VOICE_CALL | DEVICE_IN_BACK_MIC |
@@ -333,7 +329,7 @@ public:
                 DEVICE_IN_ANC_HEADSET |
                 DEVICE_IN_ANLG_DOCK_HEADSET | DEVICE_IN_PROXY |
 #endif
-#if defined(QCOM_FM_ENABLED) || defined(STE_FM)
+#ifdef QCOM_FM_ENABLED
                 DEVICE_IN_FM_RX | DEVICE_IN_FM_RX_A2DP |
 #endif
                 DEVICE_IN_DEFAULT)

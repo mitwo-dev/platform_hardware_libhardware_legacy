@@ -1036,10 +1036,7 @@ status_t AudioPolicyManagerBase::setStreamVolumeIndex(AudioSystem::stream_type s
     for (size_t i = 0; i < mOutputs.size(); i++) {
         audio_devices_t curDevice =
                 getDeviceForVolume(mOutputs.valueAt(i)->device());
-#ifndef ICS_AUDIO_BLOB
-        if ((device == AUDIO_DEVICE_OUT_DEFAULT) || (device == curDevice))
-#endif
-        {
+        if ((device == AUDIO_DEVICE_OUT_DEFAULT) || (device == curDevice)) {
             status_t volStatus = checkAndSetVolume(stream, index, mOutputs.keyAt(i), curDevice);
             if (volStatus != NO_ERROR) {
                 status = volStatus;
@@ -1056,7 +1053,6 @@ status_t AudioPolicyManagerBase::getStreamVolumeIndex(AudioSystem::stream_type s
     if (index == NULL) {
         return BAD_VALUE;
     }
-#ifndef ICS_AUDIO_BLOB
     if (!audio_is_output_device(device)) {
         return BAD_VALUE;
     }
@@ -1068,9 +1064,6 @@ status_t AudioPolicyManagerBase::getStreamVolumeIndex(AudioSystem::stream_type s
     device = getDeviceForVolume(device);
 
     *index =  mStreams[stream].getVolumeIndex(device);
-#else
-    *index =  mStreams[stream].mIndexCur.valueAt(0);
-#endif
     ALOGV("getStreamVolumeIndex() stream %d device %08x index %d", stream, device, *index);
     return NO_ERROR;
 }
@@ -2659,6 +2652,7 @@ float AudioPolicyManagerBase::volIndexToAmpl(audio_devices_t device, const Strea
             decibels,
             curve[segment+1].mDBAttenuation,
             amplification);
+
     return amplification;
 }
 
@@ -3462,7 +3456,7 @@ const struct StringToEnum sDeviceNameToEnumTable[] = {
     STRING_TO_ENUM(AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET),
     STRING_TO_ENUM(AUDIO_DEVICE_OUT_USB_DEVICE),
     STRING_TO_ENUM(AUDIO_DEVICE_OUT_USB_ACCESSORY),
-#if defined(QCOM_FM_ENABLED) || defined(STE_FM)
+#ifdef QCOM_FM_ENABLED
     STRING_TO_ENUM(AUDIO_DEVICE_OUT_FM),
     STRING_TO_ENUM(AUDIO_DEVICE_OUT_FM_TX),
 #endif
@@ -3478,7 +3472,7 @@ const struct StringToEnum sDeviceNameToEnumTable[] = {
     STRING_TO_ENUM(AUDIO_DEVICE_IN_ANC_HEADSET),
 #endif
     STRING_TO_ENUM(AUDIO_DEVICE_IN_AUX_DIGITAL),
-#if defined(QCOM_FM_ENABLED) || defined(STE_FM)
+#ifdef QCOM_FM_ENABLED
     STRING_TO_ENUM(AUDIO_DEVICE_IN_FM_RX),
     STRING_TO_ENUM(AUDIO_DEVICE_IN_FM_RX_A2DP),
 #endif
